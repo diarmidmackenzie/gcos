@@ -51,3 +51,34 @@ button {
   display: inline-block;
   color: grey;
 }
+
+.color-block {
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+  height: 150px;
+}
+
+.norm-scores {
+  text-align: center;
+}
+
+.percentile-scores {
+  text-align: center;
+}
+
+.green {
+  color: white;
+  background-color: #0F0;
+}
+
+.red {
+  color: white;
+  background-color: #F00;
+}
+.blue {
+  color: white;
+  background-color: #00F;
+}

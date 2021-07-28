@@ -22,6 +22,7 @@ function App() {
 function GcosApp() {
 
   // Assume 17 questions, 3 answers for each
+  // for testing, you can preset answers to non-zero values.
   var scoresArray = Array.from(Array(17), () => [0, 0, 0]);
   const [gcosScores, setGcosScores] = useState(scoresArray);
   const [questionCursor, setQuestionCursor] = useState(-1);
@@ -50,6 +51,15 @@ function GcosApp() {
     newSubGroupScores[subindex] = score;
     newScores[index] = newSubGroupScores;
     setGcosScores(newScores);
+  }
+
+  function resetSurvey() {
+
+    if (window.confirm("If you continue, you will lose all your answer data.")) {
+      var newScores = Array.from(Array(17), () => [0, 0, 0]);
+      setGcosScores(newScores);
+      setQuestionCursor(-1);
+    }
   }
 
   function moveCursor(delta) {
@@ -91,8 +101,10 @@ function GcosApp() {
         <div id="results">
           <GcosResults
            coding = {questionData['coding']}
+           distribution = {questionData['distribution']}
            scores = {gcosScores}
-           moveCursor = {moveCursor}/>
+           moveCursor = {moveCursor}
+           resetSurvey = {resetSurvey}/>
         </div>
       </>
     );
