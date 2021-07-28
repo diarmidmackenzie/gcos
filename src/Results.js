@@ -128,6 +128,39 @@ export function GcosResults(props) {
     return (string)
   }
 
+  // Get a text description from a percentile
+  function percentileDescription(percentile) {
+    // implementation - series of cut-offs
+    // with a different description for each cut-off.
+    var string = ""
+
+    percentile = percentile * 100
+
+    if (percentile <= 1) {
+      string = "exceptionally low"
+    }
+    else if (percentile <= 10) {
+      string = "very low"
+    }
+    else if (percentile <= 30) {
+      string = "low"
+    }
+    else if (percentile <= 70) {
+      string = "normal"
+    }
+    else if (percentile <= 90) {
+      string = "high"
+    }
+    else if (percentile <= 99) {
+      string = "very high"
+    }
+    else {
+      string = "exceptionally high"
+    }
+
+    return (string)
+  }
+
   // Take normalized A, C & I scores and generate a style string for
   // a block of color.
   function gcosColorStyle(A, C, I) {
@@ -185,9 +218,9 @@ export function GcosResults(props) {
        <div className = "color-block"
           style = {gcosColorStyle(aNormalized, cNormalized, iNormalized)}>
           <div className = "percentile-scores">
-             <p>Autonomy: {displayPercentile(aPercentile)}th</p>
-             <p>Control: {displayPercentile(cPercentile)}th</p>
-             <p>Impersonal: {displayPercentile(iPercentile)}th</p>
+             <p>Autonomy: {displayPercentile(aPercentile)}th ({percentileDescription(aPercentile)})</p>
+             <p>Control: {displayPercentile(cPercentile)}th ({percentileDescription(cPercentile)})</p>
+             <p>Impersonal: {displayPercentile(iPercentile)}th ({percentileDescription(iPercentile)})</p>
            </div>
         </div>
         <p>The background color used above represents your overall control orientation.</p>
