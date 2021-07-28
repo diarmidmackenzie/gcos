@@ -208,9 +208,9 @@ export function GcosResults(props) {
        <div className = "color-block"
           style = {gcosColorStyle(aNormalized, cNormalized, iNormalized)}>
           <div className = "norm-scores">
-             <p>Autonomy: {aNormalized.toFixed(1)} </p>
-             <p>Control: {cNormalized.toFixed(1)} </p>
-             <p>Impersonal: {iNormalized.toFixed(1)} </p>
+             <p>Autonomy: {aNormalized.toFixed(1)} ({percentileDescription(aPercentile)})</p>
+             <p>Control: {cNormalized.toFixed(1)} ({percentileDescription(cPercentile)})</p>
+             <p>Impersonal: {iNormalized.toFixed(1)} ({percentileDescription(iPercentile)})</p>
            </div>
          </div>
        <p>(scale 0 to 100, mean = 50, 1 S.D. = 12.5 points)</p>
