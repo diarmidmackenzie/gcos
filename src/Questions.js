@@ -1,21 +1,22 @@
 
 // questions = data for questions.
+// cursor = index of situation to show
 // scores = data recording scores
 // setScore = callback to set a score
+// moveCursor = callback to move the cursor
 
 export function GcosQuestions(props) {
 
   return (
     <>
-      {props.scores.map((scoreGroup, index) => (
-          <Situation
-            key = {"Q" + Number(index)}
-            index = {index}
-            question = {props.questions[index].question}
-            questions = {props.questions}
-            scoreGroup = {scoreGroup}
-            setScore = {() => props.setScore}/>
-        ))}
+      <Situation
+        index = {props.cursor}
+        question = {props.questions[props.cursor].question}
+        questions = {props.questions}
+        scoreGroup = {props.scores[props.cursor]}
+        setScore = {props.setScore}/>
+      <button type="button" onClick = {() => props.moveCursor(-1)}>Prev</button>
+      <button type="button" onClick = {() => props.moveCursor(1)}>Next</button>
     </>
   )
 };
@@ -40,7 +41,8 @@ function Situation(props) {
               index = {index}
               responseText = {props.questions[props.index].responses[index]}
               score = {score}
-              setScore = {props.setScore}/>
+              setScore = {props.setScore}
+              selectedValue = {props.scoreGroup[index]}/>
           ))}
       </div>
     </>
@@ -51,6 +53,7 @@ function Situation(props) {
 // index = index of response within this group
 // responseText = text of this response
 // setScore = callback to set a score
+// selectedValue = which value (if any) is checked.
 function Response(props) {
   return (
     <>
@@ -63,6 +66,7 @@ function Response(props) {
             groupIndex = {props.groupIndex}
             index = {props.index}
             value = {item + 1}
+            defaultChecked = {props.selectedValue === (item + 1)}
             setScore = {props.setScore}
           />
         ))
@@ -75,6 +79,7 @@ function Response(props) {
 // index = index of response within this group
 // value = value to choose
 // setScore = callback to set a score
+// defaultChecked = whether or not this option is checked (true/false)
 function Option(props) {
 
   return(
@@ -82,9 +87,8 @@ function Option(props) {
       <input type = "radio"
              name = {props.groupIndex + "-" + props.index}
              value = {props.value}
-             onClick = {props.setScore(props.groupIndex,
-                                       props.index,
-                                       props.value)}/>
+             defaultChecked = {props.defaultChecked ? "checked" : null}
+             onClick = {() => props.setScore(props.groupIndex, props.index, props.value)}/>
       <label for={props.value}>{props.value}</label>
     </>
 

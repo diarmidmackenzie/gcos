@@ -24,6 +24,7 @@ function GcosApp() {
   // Assume 17 questions, 3 answers for each
   var scoresArray = Array.from(Array(17), () => [0, 0, 0]);
   const [gcosScores, setGcosScores] = useState(scoresArray);
+  const [questionCursor, setQuestionCursor] = useState(0);
 
   const { isLoading: loadingQuestions,
           error: errorQuestions,
@@ -43,13 +44,22 @@ function GcosApp() {
     setGcosScores(newScores);
   }
 
+  function moveCursor(delta) {
+    var newCursor = questionCursor + delta;
+    if (newCursor >= 0 && newCursor < scoresArray.length) {
+      setQuestionCursor(newCursor);
+    }
+  }
+
   return (
       <>
         <div id="questions">
           <GcosQuestions
            questions = {questionData['questions']}
+           cursor = {questionCursor}
            scores = {gcosScores}
-           setScores = {updateScore}/>
+           setScore = {updateScore}
+           moveCursor = {moveCursor}/>
         </div>
         <div id="results">
           <GcosResults
