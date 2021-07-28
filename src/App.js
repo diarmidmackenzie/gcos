@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useQuery, QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
-import { GcosQuestions } from './Questions.js'
+import { GcosQuestions, GcosIntro } from './Questions.js'
 import { GcosResults } from './Results.js'
 import './App.css';
 
@@ -24,7 +24,7 @@ function GcosApp() {
   // Assume 17 questions, 3 answers for each
   var scoresArray = Array.from(Array(17), () => [0, 0, 0]);
   const [gcosScores, setGcosScores] = useState(scoresArray);
-  const [questionCursor, setQuestionCursor] = useState(0);
+  const [questionCursor, setQuestionCursor] = useState(-1);
 
   const { isLoading: loadingQuestions,
           error: errorQuestions,
@@ -38,36 +38,65 @@ function GcosApp() {
 
   if (errorQuestions) return 'An error has occurred: ' + errorQuestions.message
 
+  // update the Score for a particular question index, and subindex
+  // (i.e. a possible response to that question)
   function updateScore(index, subindex, score) {
-    var newScores = gcosScores;
-    newScores[index][subindex] = score;
+
+    // gcosScores is immutable so we need to work on a copy...
+    // ... and since this will be a shallow copy, we also need to copy
+    // the array containing the value we are acually modifying.
+    var newScores = [...gcosScores];
+    var newSubGroupScores = [...newScores[index]]
+    newSubGroupScores[subindex] = score;
+    newScores[index] = newSubGroupScores;
     setGcosScores(newScores);
   }
 
   function moveCursor(delta) {
     var newCursor = questionCursor + delta;
-    if (newCursor >= 0 && newCursor < scoresArray.length) {
+    if (newCursor >= -1 && newCursor <= scoresArray.length) {
       setQuestionCursor(newCursor);
     }
   }
 
-  return (
+  if (questionCursor < 0) {
+    return (
+        <>
+          <div id="questions">
+            <GcosIntro
+             cursor = {questionCursor}
+             moveCursor = {moveCursor}/>
+          </div>
+        </>
+    );
+  }
+  else if (questionCursor < scoresArray.length) {
+
+    return (
+        <>
+          <div id="questions">
+            <GcosQuestions
+             questions = {questionData['questions']}
+             cursor = {questionCursor}
+             scores = {gcosScores}
+             setScore = {updateScore}
+             moveCursor = {moveCursor}/>
+          </div>
+        </>
+    );
+  }
+  else {
+    return (
       <>
-        <div id="questions">
-          <GcosQuestions
-           questions = {questionData['questions']}
-           cursor = {questionCursor}
-           scores = {gcosScores}
-           setScore = {updateScore}
-           moveCursor = {moveCursor}/>
-        </div>
         <div id="results">
           <GcosResults
            coding = {questionData['coding']}
-           scores = {gcosScores}/>
+           scores = {gcosScores}
+           moveCursor = {moveCursor}/>
         </div>
       </>
-  );
+    );
+  }
 };
 
 export default App;

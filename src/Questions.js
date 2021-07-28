@@ -5,8 +5,23 @@
 // setScore = callback to set a score
 // moveCursor = callback to move the cursor
 
+export function GcosIntro(props) {
+
+  return (
+    <>
+      <p> To Begin the Survey Press the Start button </p>
+      <button type="button"
+              onClick = {() => props.moveCursor(1)}>Start</button>
+    </>
+  )
+}
+
 export function GcosQuestions(props) {
 
+  //var nextActive = props.scores[props.cursor].every((e) => e > 0);
+  var nextActive = ((props.scores[props.cursor][0] > 0 ) &&
+                    (props.scores[props.cursor][1] > 0 ) &&
+                    (props.scores[props.cursor][2] > 0 ))
   return (
     <>
       <Situation
@@ -15,8 +30,11 @@ export function GcosQuestions(props) {
         questions = {props.questions}
         scoreGroup = {props.scores[props.cursor]}
         setScore = {props.setScore}/>
-      <button type="button" onClick = {() => props.moveCursor(-1)}>Prev</button>
-      <button type="button" onClick = {() => props.moveCursor(1)}>Next</button>
+      <button type="button"
+              onClick = {() => props.moveCursor(-1)}>Prev</button>
+      <button type="button"
+              onClick = {() => props.moveCursor(1)}
+              disabled = {nextActive ? null : true}>Next</button>
     </>
   )
 };
@@ -63,6 +81,7 @@ function Response(props) {
       {
         Array.from(Array(7).keys()).map((item) => (
           <Option
+            key = {item + 1}
             groupIndex = {props.groupIndex}
             index = {props.index}
             value = {item + 1}
@@ -89,7 +108,7 @@ function Option(props) {
              value = {props.value}
              defaultChecked = {props.defaultChecked ? "checked" : null}
              onClick = {() => props.setScore(props.groupIndex, props.index, props.value)}/>
-      <label for={props.value}>{props.value}</label>
+      <label htmlFor={props.value}>{props.value}</label>
     </>
 
   )
