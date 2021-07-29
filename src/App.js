@@ -30,7 +30,7 @@ function GcosApp() {
   const { isLoading: loadingQuestions,
           error: errorQuestions,
           data : questionData } = useQuery('questions', () =>
-       fetch('/data/questions.json').then(res =>
+          fetch('https://raw.githubusercontent.com/diarmidmackenzie/gcos/main/data/questions.json').then(res =>
          res.json()
        )
      )
