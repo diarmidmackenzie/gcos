@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "proxy": "http://127.0.0.1:8000",
-  "homepage": "http://diarmidmackenzie.github.io/gcos"
+  "homepage": "http://diarmidmackenzie.github.io/gcos",
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
