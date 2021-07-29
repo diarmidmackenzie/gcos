@@ -1,70 +1,77 @@
-# Getting Started with Create React App
+# GCOS Survey
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Overview
 
-## Available Scripts
+This tool offers an assessment of your General Causality Orientation, using [Deci & Ryan's General Causality Orientation Scale (GCOS) (1985).](https://selfdeterminationtheory.org/SDT/documents/1985_DeciRyan_GCOS.pdf)
 
-In the project directory, you can run:
+It provides you with scores representing your orientation on three different scales of Causality Orientation:
 
-### `npm start`
+- Autonomous
+- Controlled
+- Impersonal
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+A PDF version of the survey can be downloaded from [here](https://selfdeterminationtheory.org/general-causality-orientations-scale/) (after registration).
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+This tool uses the 51 question version of the survey (GCOS-17).  The PDF also includes a 36 question survey (GCOS-12).
 
-### `npm test`
+At the end of the survey, this tool shows your results in three forms:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- As normalized scores, where the mean score is 100, and each Standard Deviation from the mean is +/-15 points.
+- As percentile scores
+- As a single color, representing the 3-dimensional GCOS score, with green for autonomy, red for controlled and blue for impersonal.
 
-### `npm run build`
+These scores are computed using:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- The "coding" of responses into the Autonomous, Controlled & Impersonal scales.
+- Data about the general population distribution of GCOS scores (taken from [Deci & Ryan's 1985 GCOS paper](https://selfdeterminationtheory.org/SDT/documents/1985_DeciRyan_GCOS.pdf))
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+See "detailed notes" below for some of the specifics.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The tool does not display the raw scores for each scale, because they are not directly meaningful or comparable (e.g. the average score for Autonomy is much higher than the average score for Controlled or Impersonal).
 
-### `npm run eject`
+### Data Privacy
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+All processing of the answers you provide is exclusively within your browser.  This site does not collect any data from you.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### What do my GCOS Scores Mean?
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+A person's General Causality Orientation influences their likelihood of interpreting interactions as autonomy-supporting, controlling, or amotivating, which in turn predicts a wide range of other outcomes.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Each of these is influenced by the respective scale (Autonomy, Controlled or Impersonal) on the GCOS.
 
-## Learn More
+Causality Orientation Theory (COT) is part of Self-Determination Theory, a contemporary theory in empirical psychology.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+COT predicts that a person's General Causality Orientation has a significant impact on several important aspects of their life.  In particular:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- A high autonomy orientation is strongly associated with the healthiest development and best overall psychological well-being.
+- A high controlled orientation is often associated with success, but this success often comes at a cost in terms of psychological well-being.
+- A high impersonal orientation is associated with a lack of motivation, and the lowest well-being.
 
-### Code Splitting
+You can find (much) more detail on Causality Orientation Theory this [in this article](https://diarmidmackenzie.github.io/sdt-condensed/COT.html).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Detailed Notes
 
-### Analyzing the Bundle Size
+The data on GCOS distribution in the population comes from this data in [Deci & Ryan's 1985 paper](https://selfdeterminationtheory.org/SDT/documents/1985_DeciRyan_GCOS.pdf).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+![image-20210729132332856](GCOS-Distribution.png)
 
-### Making a Progressive Web App
+This data comes from a sample of 636 undergraduate students, so may not be representative of the overall population.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+The tool uses the combined data.  Showing different scores for men & women is a potential future enhancement.
 
-### Advanced Configuration
+The data was collected from GCOS-12, with 36 questions.  Therefore to compare with this data, the scores from GCOS-17 are scaled by a factor of 12/17.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+The calculations do not model skew or curtosis.  They just compute the number of standard deviations that a score lies from the mean, and then compute percentiles assuming a normal distribution.
 
-### Deployment
+The "normalized" scores presented follow the same model as IQ scores: 100 points is the average, and a standard deviation is represented by 15 points, so a score of 130 is 2 standard deviations above the mean.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+The 3-dimensional GCOS score is also translated into a single color, with red representing the controlled orientation, green representing the autonomy orientation, and blue representing the impersonal orientation.
 
-### `npm run build` fails to minify
+For this color mapping, the values 40 to 160 on the normalized scale are mapped linearly to RGB values from 0 to 255.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Source Code
+
+The source code for this tool is available under the MIT license.
+
+https://github.com/diarmidmackenzie/gcos
+
