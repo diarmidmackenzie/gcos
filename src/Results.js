@@ -227,7 +227,7 @@ export function GcosResults(props) {
           style = {gcosColorStyle(aNormalized, cNormalized, iNormalized)}>
           <div className = "norm-scores">
              <p>Autonomy: {aNormalized.toFixed(0)} ({percentileDescription(aPercentile)})</p>
-             <p>Control: {cNormalized.toFixed(0)} ({percentileDescription(cPercentile)})</p>
+             <p>Controlled: {cNormalized.toFixed(0)} ({percentileDescription(cPercentile)})</p>
              <p>Impersonal: {iNormalized.toFixed(0)} ({percentileDescription(iPercentile)})</p>
            </div>
          </div>
@@ -237,7 +237,7 @@ export function GcosResults(props) {
           style = {gcosColorStyle(aNormalized, cNormalized, iNormalized)}>
           <div className = "percentile-scores">
              <p>Autonomy: {displayPercentile(aPercentile)}th ({percentileDescription(aPercentile)})</p>
-             <p>Control: {displayPercentile(cPercentile)}th ({percentileDescription(cPercentile)})</p>
+             <p>Controlled: {displayPercentile(cPercentile)}th ({percentileDescription(cPercentile)})</p>
              <p>Impersonal: {displayPercentile(iPercentile)}th ({percentileDescription(iPercentile)})</p>
            </div>
         </div>
