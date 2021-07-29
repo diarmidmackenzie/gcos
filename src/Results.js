@@ -246,6 +246,7 @@ export function GcosResults(props) {
            <span className = "red"> Controlled </span>
            <span className = "blue"> Impersonal </span>
          </p>
+         <p> For information about how to understand these results, see <a href="https://github.com/diarmidmackenzie/gcos/blob/main/README.md#what-do-my-gcos-scores-mean">the notes here</a>.</p>
      </div>
      <br/>
      <button type="button" onClick = {() => props.moveCursor(-1)}>Back</button>

@@ -13,10 +13,8 @@ export function GcosIntro(props) {
       <p> To Begin the Survey Press the Start button </p>
       <button type="button"
               onClick = {() => props.moveCursor(1)}>Start</button>
-      <p> Some notes about privacy...</p>
-      <p> (No data is collected.  No data leaves the browser.)</p>
-      <p> Some notes about how the survey works...</p>
-      <p> (choose a 'likelihood' for each possible response)</p>
+      <p> All processing of the answers you provide is exclusively within your browser.  This site does not collect any data from you.</p>
+      <p> For background about Causality Orientations and the GCOS scale, see <a href="https://github.com/diarmidmackenzie/gcos/blob/main/README.md#gcos-survey">the project README file in GitHub</a></p>
     </>
   )
 }
