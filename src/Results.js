@@ -18,7 +18,7 @@ export function GcosResults(props) {
     return (total)
   }
 
-  function normalized(distribution, value) {
+  function getSds(distribution, value) {
 
     // scale value by 12/17 (distribution data is from 12 question survey)
     const scaledValue = (value * 12) / 17;
@@ -36,9 +36,17 @@ export function GcosResults(props) {
       sds = -4;
     }
 
-    // each SD maps to 12.5 percentage points in this scale
-    // ( 0 = -4 SDs, 100 = +4 SDs);
-    const normalizedValue = 50 + (sds * 12.5)
+    return (sds);
+  }
+
+
+  function normalized(distribution, value) {
+
+    const sds = getSds(distribution, value)
+
+    // each SD maps to 15 percentage points in this scale
+    // ( 40 = -4 SDs, 160 = +4 SDs);
+    const normalizedValue = 100 + (sds * 15)
     console.log(`Normalized: ${normalizedValue}`)
 
     return (normalizedValue);
@@ -46,12 +54,7 @@ export function GcosResults(props) {
 
   function percentile(distribution, value) {
 
-    // start by getting normalized value.
-    const normalizedValue = normalized(distribution, value)
-    console.log(`Normalized: ${normalizedValue}`)
-
-    // convert back to a number of standard deviations.
-    const sds = (normalizedValue - 50) / 12.5;
+    const sds = getSds(distribution, value)
     console.log(`SDs: ${sds}`)
 
     const percentileScore = GetZPercent(sds)
@@ -165,16 +168,31 @@ export function GcosResults(props) {
   // a block of color.
   function gcosColorStyle(A, C, I) {
 
-    var style = {}
+    var style = {};
 
     // Control = red, Autonomy = green, Impersonal = blue
-    var string = "#"
-    string += Math.floor(C * 255 / 100).toString(16);
-    string += Math.floor(A * 255 / 100).toString(16);
-    string += Math.floor(I * 255 / 100).toString(16);
+    // normalized scores are on a scale of 40 to 160.  Need to map to a scale
+    // of 0 to 255.
+    function scoreToRGB(score) {
+      return Math.floor((score - 40) * 255 / 120).toString(16).padStart(2,'0');
+    }
 
-    style['background-color'] = string;
-    style['color'] = "white"
+    const r = scoreToRGB(C);
+    const g = scoreToRGB(A);
+    const b = scoreToRGB(I);
+
+    style['backgroundColor'] = "#" + r + g + b;
+
+    if ((Number("0x" + r) +
+         Number("0x" + g) +
+         Number("0x" + b)) > 400) {
+
+       style['color'] = "black"
+    }
+    else
+    {
+       style['color'] = "white"
+    }
 
     return (style)
   }
@@ -208,12 +226,12 @@ export function GcosResults(props) {
        <div className = "color-block"
           style = {gcosColorStyle(aNormalized, cNormalized, iNormalized)}>
           <div className = "norm-scores">
-             <p>Autonomy: {aNormalized.toFixed(1)} ({percentileDescription(aPercentile)})</p>
-             <p>Control: {cNormalized.toFixed(1)} ({percentileDescription(cPercentile)})</p>
-             <p>Impersonal: {iNormalized.toFixed(1)} ({percentileDescription(iPercentile)})</p>
+             <p>Autonomy: {aNormalized.toFixed(0)} ({percentileDescription(aPercentile)})</p>
+             <p>Control: {cNormalized.toFixed(0)} ({percentileDescription(cPercentile)})</p>
+             <p>Impersonal: {iNormalized.toFixed(0)} ({percentileDescription(iPercentile)})</p>
            </div>
          </div>
-       <p>(scale 0 to 100, mean = 50, 1 S.D. = 12.5 points)</p>
+       <p>(mean = 100, 1 S.D. = 15 points)</p>
        <p>These are your results as percentiles.</p>
        <div className = "color-block"
           style = {gcosColorStyle(aNormalized, cNormalized, iNormalized)}>

@@ -59,10 +59,13 @@ button {
   justify-content: center;
   width: 400px;
   height: 150px;
+  border-width: 1px;
+  border-style: solid;
+  border: black;
 }
 
 .norm-scores {
-  text-align: center;
+  text-align: center;  
 }
 
 .percentile-scores {
